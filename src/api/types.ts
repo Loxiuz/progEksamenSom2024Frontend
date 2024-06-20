@@ -9,7 +9,7 @@ interface Participant {
   fullName: string;
   email: string;
   gender: string;
-  birthDate: string;
+  birthdate: string;
   club: string;
 }
 
