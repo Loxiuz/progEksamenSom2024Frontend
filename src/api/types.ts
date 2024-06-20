@@ -7,6 +7,27 @@ interface Participant {
   club: string;
 }
 
+interface ParticipantDialogProps {
+  participant: Participant;
+  ageGroup: string;
+  open: boolean;
+  onClose: () => void;
+}
+
+interface ParticipantSelectorDialogProps {
+  open: boolean;
+  onSelect: (participant: Participant) => void;
+}
+
+const EMPTY_PARTICIPANT: Participant = {
+  id: null,
+  fullName: "",
+  email: "",
+  gender: "gender",
+  birthdate: "",
+  club: "",
+};
+
 interface Discipline {
   id: number | null;
   name: string;
@@ -21,20 +42,12 @@ interface Result {
   value: string;
 }
 
-interface ParticipantDialogProps {
-  participant: Participant;
-  ageGroup: string;
-  open: boolean;
-  onClose: () => void;
-}
-
-const EMPTY_PARTICIPANT: Participant = {
+const EMPTY_RESULT: Result = {
   id: null,
-  fullName: "",
-  email: "",
-  gender: "gender",
-  birthdate: "",
-  club: "",
+  participantId: 0,
+  disciplineId: 0,
+  date: "",
+  value: "",
 };
 
 function ageGroup(age: number) {
@@ -53,6 +66,12 @@ function ageGroup(age: number) {
   }
 }
 
-export { EMPTY_PARTICIPANT, ageGroup };
+export { EMPTY_PARTICIPANT, EMPTY_RESULT, ageGroup };
 
-export type { Participant, Discipline, Result, ParticipantDialogProps };
+export type {
+  Participant,
+  Discipline,
+  Result,
+  ParticipantDialogProps,
+  ParticipantSelectorDialogProps,
+};
