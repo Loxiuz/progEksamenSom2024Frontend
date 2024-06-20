@@ -50,7 +50,7 @@ export default function ResultList() {
         <td className="edit-delete-btns">
           <button
             onClick={() => {
-              nav(`/result/form`, { state: { r: result } });
+              nav(`/results/form`, { state: { r: result } });
             }}
           >
             Edit
@@ -75,7 +75,7 @@ export default function ResultList() {
       <h2>Results</h2>
       <button
         onClick={() => {
-          nav("/result/form");
+          nav("/results/form");
         }}
       >
         Add Result

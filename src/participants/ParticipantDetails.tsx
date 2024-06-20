@@ -8,7 +8,7 @@ export default function ParticipantDetails(props: ParticipantDialogProps) {
   const nav = useNavigate();
 
   function handleEdit() {
-    nav("/participant/form", { state: { id: participant.id } });
+    nav("/participants/form", { state: { id: participant.id } });
   }
 
   async function handleDelete() {

@@ -69,7 +69,7 @@ export default function ParticipantList() {
       <h2>Participants</h2>
       <button
         onClick={() => {
-          nav("/participant/form");
+          nav("/participants/form");
         }}
       >
         Add Participant
