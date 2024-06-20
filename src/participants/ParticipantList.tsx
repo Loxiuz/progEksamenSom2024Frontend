@@ -74,6 +74,13 @@ export default function ParticipantList() {
       >
         Add Participant
       </button>
+      <button
+        onClick={() => {
+          nav("/results");
+        }}
+      >
+        All Results
+      </button>
       <br />
       <br />
       <table id="participant-table">
