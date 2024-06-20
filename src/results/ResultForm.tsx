@@ -10,6 +10,7 @@ import "./ResultForm.css";
 import ParticipantSelectorDialog from "../participants/ParticipantSelectorDialog";
 import { getDisciplines } from "../api/disciplineApi";
 import { createUpdateResult } from "../api/resultApi";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function ResultForm() {
   const [resultForm, setResultForm] = useState<Result>(EMPTY_RESULT);
@@ -17,6 +18,9 @@ export default function ResultForm() {
   const [selectedParticipant, setSelectedParticipant] =
     useState<Participant>(EMPTY_PARTICIPANT);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const location = useLocation();
+  const resultToEdit = location.state ? location.state.r : null;
+  const nav = useNavigate();
 
   useEffect(() => {
     const fetchDisciplines = async () => {
@@ -25,6 +29,12 @@ export default function ResultForm() {
     };
     fetchDisciplines();
   }, [setDisciplines]);
+
+  useEffect(() => {
+    if (resultToEdit) {
+      setResultForm(resultToEdit);
+    }
+  }, [resultToEdit]);
 
   function handleFormChange(event: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = event.target;
@@ -54,8 +64,12 @@ export default function ResultForm() {
     e.preventDefault();
     const response = await createUpdateResult(resultForm);
     if (response) {
-      alert("Result added successfully!");
-      window.location.reload();
+      if (resultToEdit) {
+        alert("Result updated");
+      } else {
+        alert("Result added");
+      }
+      nav("/results");
     }
   }
 
@@ -76,17 +90,18 @@ export default function ResultForm() {
           >
             Select Participant
           </button>
-          <h4>Participant: {`${selectedParticipant.fullName}`}</h4>
+          <h4>
+            Participant: {resultForm.participantId}.{" "}
+            {selectedParticipant && <span>{selectedParticipant.fullName}</span>}
+          </h4>
         </div>
         <select
           name="disciplineId"
           id="discipline"
-          defaultValue={"discipline"}
+          defaultValue={`${resultForm.disciplineId}` || "discipline"}
           onChange={handleSelectChange}
         >
-          <option value="discipline" disabled>
-            Discipline
-          </option>
+          <option value="discipline">Discipline</option>
           {disciplineOptions()}
         </select>
         <div>
@@ -96,6 +111,7 @@ export default function ResultForm() {
             name="date"
             id="date"
             onChange={handleFormChange}
+            defaultValue={resultForm.date}
           />
         </div>
         <div>
@@ -105,6 +121,7 @@ export default function ResultForm() {
             name="value"
             id="value"
             onChange={handleFormChange}
+            defaultValue={resultForm.value}
           />
         </div>
         <button onClick={handleSubmit}>Confirm</button>
