@@ -1,0 +1,9 @@
+#participant-details-dialog {
+  position: fixed;
+  top: 30%;
+}
+
+#participant-details-dialog-content {
+  padding: 3em;
+  text-align: left;
+}

@@ -21,6 +21,13 @@ interface Result {
   value: string;
 }
 
+interface ParticipantDialogProps {
+  participant: Participant;
+  ageGroup: string;
+  open: boolean;
+  onClose: () => void;
+}
+
 const EMPTY_PARTICIPANT: Participant = {
   id: null,
   fullName: "",
@@ -30,6 +37,22 @@ const EMPTY_PARTICIPANT: Participant = {
   club: "",
 };
 
-export { EMPTY_PARTICIPANT };
+function ageGroup(age: number) {
+  if (age >= 6 && age <= 9) {
+    return "child";
+  } else if (age >= 10 && age <= 13) {
+    return "youngster";
+  } else if (age >= 14 && age <= 22) {
+    return "junior";
+  } else if (age >= 23 && age <= 40) {
+    return "adult";
+  } else if (age >= 41) {
+    return "senior";
+  } else {
+    return "";
+  }
+}
 
-export type { Participant, Discipline, Result };
+export { EMPTY_PARTICIPANT, ageGroup };
+
+export type { Participant, Discipline, Result, ParticipantDialogProps };
