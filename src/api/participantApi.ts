@@ -24,8 +24,17 @@ async function createUpdateParticipant(
 }
 
 async function deleteParticipant(id: number): Promise<void> {
-  const options = makeOptions("DELETE", null);
-  return fetch(`${PARTICIPANT_URL}/${id}`, options).then(handleHttpErrors);
+  return fetch(`${PARTICIPANT_URL}/${id}`, {
+    method: "DELETE",
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+    })
+    .catch((error) => {
+      console.error("There was a problem with the fetch operation:", error);
+    });
 }
 
 export {

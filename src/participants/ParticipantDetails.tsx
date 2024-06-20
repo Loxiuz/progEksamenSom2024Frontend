@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { ParticipantDialogProps } from "../api/types";
 import "./ParticipantDetails.css";
+import { deleteParticipant } from "../api/participantApi";
 
 export default function ParticipantDetails(props: ParticipantDialogProps) {
   const { participant, open, onClose, ageGroup } = props;
@@ -8,6 +9,14 @@ export default function ParticipantDetails(props: ParticipantDialogProps) {
 
   function handleEdit() {
     nav("/participant/form", { state: { id: participant.id } });
+  }
+
+  async function handleDelete() {
+    if (participant.id) {
+      await deleteParticipant(participant.id);
+      alert("Participant deleted successfully!");
+      window.location.reload();
+    }
   }
 
   return (
@@ -24,7 +33,7 @@ export default function ParticipantDetails(props: ParticipantDialogProps) {
             <p>Club: {participant.club}</p>
             <div id="participantDialogBtns">
               <button onClick={handleEdit}>Edit</button>
-              <button>Delete</button>
+              <button onClick={handleDelete}>Delete</button>
               <button onClick={onClose}>Close</button>
             </div>
           </div>
