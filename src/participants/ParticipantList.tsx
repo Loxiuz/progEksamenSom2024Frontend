@@ -54,6 +54,26 @@ export default function ParticipantList() {
     );
   }
 
+  function handleSortClick(sorting: string) {
+    switch (sorting) {
+      case "fullName":
+        setParticipants(
+          [...participants].sort((a, b) => a.fullName.localeCompare(b.fullName))
+        );
+        break;
+      case "club":
+        setParticipants(
+          [...participants].sort((a, b) => a.club.localeCompare(b.club))
+        );
+        break;
+      case "gender":
+        setParticipants(
+          [...participants].sort((a, b) => a.gender.localeCompare(b.gender))
+        );
+        break;
+    }
+  }
+
   function handleDetailsClick(participant: Participant, ageGroup: string) {
     setChosenParticipantAgeGroup(ageGroup);
     setChosenParticipant(participant);
@@ -87,10 +107,37 @@ export default function ParticipantList() {
         <thead>
           <tr>
             <th>Participant ID</th>
-            <th>Full Name </th>
-            <th>Gender</th>
+            <th>
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleSortClick("fullName");
+                }}
+              >
+                Full Name
+              </button>
+            </th>
+            <th>
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleSortClick("gender");
+                }}
+              >
+                Gender
+              </button>
+            </th>
             <th>Age Group</th>
-            <th>Club</th>
+            <th>
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleSortClick("club");
+                }}
+              >
+                Club
+              </button>
+            </th>
             <th></th>
           </tr>
         </thead>
