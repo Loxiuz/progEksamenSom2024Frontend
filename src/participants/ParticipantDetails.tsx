@@ -1,8 +1,14 @@
+import { useNavigate } from "react-router-dom";
 import { ParticipantDialogProps } from "../api/types";
 import "./ParticipantDetails.css";
 
 export default function ParticipantDetails(props: ParticipantDialogProps) {
   const { participant, open, onClose, ageGroup } = props;
+  const nav = useNavigate();
+
+  function handleEdit() {
+    nav("/participant/form", { state: { id: participant.id } });
+  }
 
   return (
     <>
@@ -17,7 +23,7 @@ export default function ParticipantDetails(props: ParticipantDialogProps) {
             <p>Age Group: {ageGroup}</p>
             <p>Club: {participant.club}</p>
             <div id="participantDialogBtns">
-              <button>Edit</button>
+              <button onClick={handleEdit}>Edit</button>
               <button>Delete</button>
               <button onClick={onClose}>Close</button>
             </div>

@@ -32,7 +32,7 @@ const EMPTY_PARTICIPANT: Participant = {
   id: null,
   fullName: "",
   email: "",
-  gender: "",
+  gender: "gender",
   birthdate: "",
   club: "",
 };

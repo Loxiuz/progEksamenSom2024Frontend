@@ -1,11 +1,26 @@
 import { useEffect, useState } from "react";
 import { EMPTY_PARTICIPANT, Participant } from "../api/types";
 import "./ParticipantForm.css";
-import { createUpdateParticipant } from "../api/participantApi";
+import { createUpdateParticipant, getParticipant } from "../api/participantApi";
+import { useLocation } from "react-router-dom";
 
 export default function ParticipantForm() {
   const [participantForm, setParticipantForm] =
     useState<Participant>(EMPTY_PARTICIPANT);
+  const location = useLocation();
+  const participantId = location.state ? location.state.id : null;
+
+  useEffect(() => {
+    if (participantId) {
+      const fetchParticipant = async () => {
+        const response = await getParticipant(participantId);
+        if (response) {
+          setParticipantForm(response);
+        }
+      };
+      fetchParticipant();
+    }
+  }, [participantId, setParticipantForm]);
 
   useEffect(() => {
     console.log(participantForm);
@@ -33,7 +48,11 @@ export default function ParticipantForm() {
     e.preventDefault();
     const response = await createUpdateParticipant(participantForm);
     if (response) {
-      alert("Participant added successfully!");
+      if (participantId) {
+        alert("Participant updated successfully!");
+      } else {
+        alert("Participant added successfully!");
+      }
       window.location.reload();
     }
   }
@@ -48,6 +67,7 @@ export default function ParticipantForm() {
             type="text"
             id="fullName"
             name="fullName"
+            defaultValue={participantForm.fullName}
             onChange={handleInputChange}
           />
         </div>
@@ -57,6 +77,7 @@ export default function ParticipantForm() {
             type="email"
             id="email"
             name="email"
+            defaultValue={participantForm.email}
             onChange={handleInputChange}
           />
         </div>
@@ -65,9 +86,9 @@ export default function ParticipantForm() {
             name="gender"
             id="gender"
             onChange={handleSelectionChange}
-            defaultValue={"default"}
+            defaultValue={participantForm.gender}
           >
-            <option value="default">Gender</option>
+            <option value="gender">Gender</option>
             <option value="male">Male</option>
             <option value="female">Female</option>
           </select>
@@ -78,6 +99,7 @@ export default function ParticipantForm() {
             type="date"
             id="birthdate"
             name="birthdate"
+            defaultValue={participantForm.birthdate}
             onChange={handleInputChange}
           />
         </div>
@@ -87,6 +109,7 @@ export default function ParticipantForm() {
             type="text"
             id="club"
             name="club"
+            defaultValue={participantForm.club}
             onChange={handleInputChange}
           />
         </div>
