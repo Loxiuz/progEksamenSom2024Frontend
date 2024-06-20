@@ -1,9 +1,3 @@
-interface Template {
-  id: number | null;
-  name: string;
-  description: string;
-}
-
 interface Participant {
   id: number | null;
   fullName: string;
@@ -27,4 +21,15 @@ interface Result {
   value: string;
 }
 
-export type { Template, Participant, Discipline, Result };
+const EMPTY_PARTICIPANT: Participant = {
+  id: null,
+  fullName: "",
+  email: "",
+  gender: "",
+  birthdate: "",
+  club: "",
+};
+
+export { EMPTY_PARTICIPANT };
+
+export type { Participant, Discipline, Result };

@@ -2,10 +2,12 @@ import { useEffect, useState } from "react";
 import { Participant } from "../api/types";
 import { getParticipants } from "../api/participantApi";
 import "./ParticipantList.css";
+import { useNavigate } from "react-router-dom";
 
 export default function ParticipantList() {
   const [participants, setParticipants] = useState<Participant[]>([]);
   const [ages, setAges] = useState<string[]>([]);
+  const nav = useNavigate();
 
   useEffect(() => {
     const fetchParticipants = async () => {
@@ -58,6 +60,15 @@ export default function ParticipantList() {
   return (
     <div>
       <h2>Participants</h2>
+      <button
+        onClick={() => {
+          nav("/participant/form");
+        }}
+      >
+        Add Participant
+      </button>
+      <br />
+      <br />
       <table id="participant-table">
         <thead>
           <tr>

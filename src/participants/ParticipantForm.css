@@ -1,0 +1,14 @@
+#participant-form-page {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+#participant-form {
+  width: 100%;
+  border: 3px solid;
+  display: grid;
+  grid-template-columns: 1fr;
+  row-gap: 1em;
+  padding: 1em;
+  text-align: right;
+}
