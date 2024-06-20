@@ -2,13 +2,14 @@ import { useEffect, useState } from "react";
 import { EMPTY_PARTICIPANT, Participant } from "../api/types";
 import "./ParticipantForm.css";
 import { createUpdateParticipant, getParticipant } from "../api/participantApi";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function ParticipantForm() {
   const [participantForm, setParticipantForm] =
     useState<Participant>(EMPTY_PARTICIPANT);
   const location = useLocation();
   const participantId = location.state ? location.state.id : null;
+  const nav = useNavigate();
 
   useEffect(() => {
     if (participantId) {
@@ -53,7 +54,7 @@ export default function ParticipantForm() {
       } else {
         alert("Participant added successfully!");
       }
-      window.location.reload();
+      nav("/");
     }
   }
 
